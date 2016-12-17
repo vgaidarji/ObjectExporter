@@ -25,3 +25,5 @@ build/*
 # gradle local dir
 .gradle
 .gradletasknamecache
+
+object-exporter-plugin.zip
