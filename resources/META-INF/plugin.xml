@@ -27,6 +27,13 @@
 
     <actions>
         <!-- Add your actions here -->
+        <action id="com.vgaidarji.objectexporter.ObjectExporter"
+                class="com.vgaidarji.objectexporter.ObjectExporter" text="Export Object..."
+                description="Export objects while debugging in different output formats.">
+            <add-to-group group-id="XDebugger.ValueGroup" anchor="after"
+                    relative-to-action="Debugger.MarkObject"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="meta C"/>
+        </action>
     </actions>
 
 </idea-plugin>
