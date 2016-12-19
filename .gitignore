@@ -26,4 +26,9 @@ build/*
 .gradle
 .gradletasknamecache
 
+gradle.properties
 object-exporter-plugin.zip
+
+.DS_Store
+*/.DS_Store
+local.properties
