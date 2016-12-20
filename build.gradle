@@ -34,7 +34,19 @@ repositories {
     mavenCentral()
 }
 
+/**
+ * @return Returns path to "tools.jar" from JAVA_HOME
+ */
+def getToolsPath() {
+//    for some reason this works from CLI, but not from IDE
+//    return "${System.getenv("JAVA_HOME")}/lib/tools.jar"
+
+//  this works both from IDE and CLI (adjust JAVA_HOME path if differs)
+    return "/Library/Java/JavaVirtualMachines/jdk1.8.0_66.jdk/Contents/Home/lib/tools.jar"
+}
+
 dependencies {
+    compile files(getToolsPath())
     testCompile 'junit:junit:4.12'
 }
 
