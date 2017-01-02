@@ -17,37 +17,33 @@
 
 package com.vgaidarji.objectexporter
 
-import com.intellij.debugger.actions.DebuggerAction
-import com.intellij.debugger.engine.DebugProcessImpl
-import com.intellij.debugger.impl.DebuggerContextImpl
-import com.intellij.debugger.ui.impl.watch.DebuggerTree
-import com.intellij.debugger.ui.impl.watch.DebuggerTreeNodeImpl
-import com.intellij.debugger.ui.impl.watch.NodeDescriptorImpl
+import com.intellij.debugger.engine.JavaValue
 import com.intellij.debugger.ui.impl.watch.ValueDescriptorImpl
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.PlatformDataKeys
-import com.intellij.xdebugger.impl.ui.tree.ValueMarkup
+import com.intellij.xdebugger.impl.ui.tree.XDebuggerTree
+import com.intellij.xdebugger.impl.ui.tree.nodes.XValueNodeImpl
+import com.sun.jdi.Type
+import com.sun.jdi.Value
 
-import java.awt.Component
+import javax.swing.tree.TreePath
+import javax.swing.tree.TreeSelectionModel
 
 class ObjectExporter extends AnAction {
     @Override
     void actionPerformed(AnActionEvent e) {
-        System.out.println("ObjectsExporter - action performed");
+        System.out.println("ObjectsExporter - action performed")
 
-        final DebuggerTreeNodeImpl node = DebuggerAction.getSelectedNode(e.getDataContext())
-        if (node != null) {
-            NodeDescriptorImpl descriptor = node.getDescriptor()
-            if (descriptor instanceof ValueDescriptorImpl) {
-                final DebuggerTree tree = node.getTree()
-                tree.saveState(node)
-                final Component parent = (Component)e.getData(PlatformDataKeys.CONTEXT_COMPONENT)
-                final ValueDescriptorImpl valueDescriptor = (ValueDescriptorImpl)descriptor
-                final DebuggerContextImpl debuggerContext = tree.getDebuggerContext()
-                final DebugProcessImpl debugProcess = debuggerContext.getDebugProcess()
-                final ValueMarkup markup = valueDescriptor.getMarkup(debugProcess)
-            }
+        XDebuggerTree xDebuggerTree = XDebuggerTree.getTree(e)
+        if (xDebuggerTree != null) {
+            final TreeSelectionModel selectionModel = xDebuggerTree.getSelectionModel()
+            final TreePath leadSelectionPath = selectionModel.getLeadSelectionPath()
+            final XValueNodeImpl lastPathComponent = (XValueNodeImpl) leadSelectionPath.getLastPathComponent()
+            final JavaValue javaValue = (JavaValue) lastPathComponent.getValueContainer()
+            final ValueDescriptorImpl valueDescriptor = javaValue.getDescriptor()
+            final String variableName = javaValue.getName()
+            final Type variableType = valueDescriptor.type()
+            final Value variableValue = valueDescriptor.getValue()
         }
     }
 }

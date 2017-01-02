@@ -22,17 +22,15 @@
     <depends>com.intellij.modules.lang</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <!-- Add your extensions here -->
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
         <action id="com.vgaidarji.objectexporter.ObjectExporter"
                 class="com.vgaidarji.objectexporter.ObjectExporter" text="Export Object..."
                 description="Export objects while debugging in different output formats.">
             <add-to-group group-id="XDebugger.ValueGroup" anchor="after"
-                    relative-to-action="Debugger.MarkObject"/>
-            <keyboard-shortcut keymap="$default" first-keystroke="meta C"/>
+                    relative-to-action="XDebugger.CopyValue"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="shift meta C"/>
         </action>
     </actions>
 
