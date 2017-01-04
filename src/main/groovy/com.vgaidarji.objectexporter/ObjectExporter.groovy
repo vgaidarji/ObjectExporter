@@ -42,8 +42,9 @@ class ObjectExporter extends AnAction {
             final JavaValue javaValue = (JavaValue) lastPathComponent.getValueContainer()
             final ValueDescriptorImpl valueDescriptor = javaValue.getDescriptor()
             final String variableName = javaValue.getName()
-            final Type variableType = valueDescriptor.type()
+            final Type variableType = valueDescriptor.getType()
             final Value variableValue = valueDescriptor.getValue()
+            println variableType.name() + " " + variableName + " = " + variableValue.toString()
         }
     }
 }
