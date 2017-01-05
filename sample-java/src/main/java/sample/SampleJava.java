@@ -1,8 +1,8 @@
-package java;
+package sample;
 
 public class SampleJava {
 
-    static void main(String[] args) {
+    public static void main(String[] args) {
         int x = 2;
         x = 3;
 
