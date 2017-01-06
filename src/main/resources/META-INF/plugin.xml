@@ -25,8 +25,8 @@
     </extensions>
 
     <actions>
-        <action id="com.vgaidarji.objectexporter.ObjectExporter"
-                class="com.vgaidarji.objectexporter.ObjectExporter" text="Export Object..."
+        <action id="com.vgaidarji.objectexporter.ObjectExporterAction"
+                class="com.vgaidarji.objectexporter.ObjectExporterAction" text="Export Object..."
                 description="Export objects while debugging in different output formats.">
             <add-to-group group-id="XDebugger.ValueGroup" anchor="after"
                     relative-to-action="XDebugger.CopyValue"/>
