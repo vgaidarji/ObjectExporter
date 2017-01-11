@@ -17,16 +17,10 @@
 
 package com.vgaidarji.objectexporter
 
-import com.intellij.debugger.engine.JavaValue
-import com.intellij.debugger.ui.impl.watch.ValueDescriptorImpl
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.ui.Messages
 import com.intellij.xdebugger.impl.ui.tree.XDebuggerTree
-import com.intellij.xdebugger.impl.ui.tree.nodes.XValueNodeImpl
-
-import javax.swing.tree.TreePath
-import javax.swing.tree.TreeSelectionModel
 
 class ObjectExporterAction extends AnAction {
 
@@ -34,21 +28,10 @@ class ObjectExporterAction extends AnAction {
     void actionPerformed(AnActionEvent e) {
         XDebuggerTree xDebuggerTree = XDebuggerTree.getTree(e)
         if (xDebuggerTree != null) {
-            String code =
-                    new ObjectExporter(e.getProject(), toObjectDescriptor(xDebuggerTree)).asString()
+            ObjectDescriptor objectDescriptor = new DebuggerTreeToObject().toObject(xDebuggerTree)
+            String code = new ObjectExporter(e.getProject(), objectDescriptor).asString()
             Messages.showMessageDialog(e.getProject(), code, "Extracted object",
                     Messages.getInformationIcon())
         }
-    }
-
-    private static ObjectDescriptor toObjectDescriptor(XDebuggerTree xDebuggerTree) {
-        final TreeSelectionModel selectionModel = xDebuggerTree.getSelectionModel()
-        final TreePath leadSelectionPath = selectionModel.getLeadSelectionPath()
-        final XValueNodeImpl lastPathComponent = (XValueNodeImpl) leadSelectionPath.
-                getLastPathComponent()
-        final JavaValue javaValue = (JavaValue) lastPathComponent.getValueContainer()
-        final ValueDescriptorImpl valueDescriptor = javaValue.getDescriptor()
-        new ObjectDescriptor(javaValue.getName(), valueDescriptor.getType(),
-                valueDescriptor.getValue())
     }
 }
