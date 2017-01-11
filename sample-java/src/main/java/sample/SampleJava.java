@@ -9,6 +9,7 @@ public class SampleJava {
         Person p = new Person("Veaceslav", "Gaidarji",
                 new Address("Chisinau", "bd. Stefan cel Mare", 001), 17);
         p.age = 18;
+
     }
 
     static class Person {
