@@ -1,21 +1,27 @@
 package com.vgaidarji.objectexporter
 
+import com.intellij.debugger.engine.DebugProcessImpl
 import com.intellij.debugger.engine.JavaValue
+import com.intellij.debugger.engine.MockSuspendContext
+import com.intellij.debugger.engine.SuspendContextImpl
 import com.intellij.debugger.engine.evaluation.EvaluationContextImpl
-import com.intellij.debugger.ui.impl.watch.ArgumentValueDescriptorImpl
-import com.intellij.debugger.ui.impl.watch.NodeManagerImpl
+import com.intellij.debugger.settings.NodeRendererSettings
 import com.intellij.debugger.ui.impl.watch.ValueDescriptorImpl
-import com.intellij.mock.MockProjectEx
-import com.intellij.testFramework.LightCodeInsightTestCase
+import com.intellij.openapi.Disposable
+import com.intellij.openapi.application.Application
+import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.extensions.Extensions
+import com.intellij.openapi.project.Project
 import com.intellij.xdebugger.impl.ui.tree.XDebuggerTree
 import com.intellij.xdebugger.impl.ui.tree.nodes.XValueNodeImpl
 import com.sun.jdi.PrimitiveValue
 import com.sun.tools.jdi.MyIntegerValueImpl
 import com.sun.tools.jdi.MyVirtualMachineImpl
-import org.junit.Ignore
+import com.vgaidarji.objectexporter.mock.*
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
+import org.picocontainer.PicoContainer
 
 import javax.swing.tree.TreePath
 import javax.swing.tree.TreeSelectionModel
@@ -26,6 +32,10 @@ import static org.mockito.Mockito.when
 @RunWith(JUnit4)
 class DebuggerToObjectTest extends GroovyTestCase {
     private MyVirtualMachineImpl virtualMachine
+    private Disposable disposable
+    private PicoContainer picoContainer
+    private Application application
+    private Project project
 
     @Override
     void setUp() {
@@ -33,7 +43,6 @@ class DebuggerToObjectTest extends GroovyTestCase {
         virtualMachine = mock(MyVirtualMachineImpl)
     }
 
-    @Ignore("find a way to prepare `JavaValue` object for test")
     @Test
     void toObject_shouldExtractPrimitive() {
         DebuggerTreeToObject extractor = new DebuggerTreeToObject()
@@ -50,7 +59,7 @@ class DebuggerToObjectTest extends GroovyTestCase {
     }
 
     private XDebuggerTree createDebuggerTreeWithPrimitive(PrimitiveType type, String name,
-            PrimitiveValue value) {
+                                                          PrimitiveValue value) {
         XDebuggerTree tree = mock(XDebuggerTree)
         TreeSelectionModel treeSelectionModel = mock(TreeSelectionModel)
         TreePath treePath = mock(TreePath)
@@ -62,15 +71,31 @@ class DebuggerToObjectTest extends GroovyTestCase {
         tree
     }
 
-    private JavaValue preparePrimitive(PrimitiveType type, String name,
-            PrimitiveValue value) {
-        // TODO: find a way to prepare `JavaValue` object for test
-        ValueDescriptorImpl valueDescriptor = mock(ValueDescriptorImpl.class)
-        JavaValue javaValue = mock(JavaValue)
-        when(valueDescriptor.getType()).thenReturn(type)
-        when(valueDescriptor.getValue()).thenReturn(value)
-        when(javaValue.getDescriptor()).thenReturn(valueDescriptor)
-        when(javaValue.getName()).thenReturn(name)
-        javaValue
+
+    private JavaValue preparePrimitive(PrimitiveType type, String name, PrimitiveValue value) {
+        mockDependencies()
+        DebugProcessImpl debugProcess = new MockDebugProcess(project)
+        SuspendContextImpl suspendContext = new MockSuspendContext(debugProcess, 0, 0, null)
+        EvaluationContextImpl evaluationContext = new EvaluationContextImpl(suspendContext, null, null)
+        ValueDescriptorImpl descriptor = createValueDescriptor(type, name, value)
+        new MockJavaValue(descriptor, evaluationContext)
+    }
+
+    private void mockDependencies() {
+        Extensions.registerAreaClass("IDEA_PROJECT", null);
+        disposable = new MockDisposable()
+        picoContainer = new MockPicoContainer()
+        application = new MockApplication(picoContainer, disposable)
+        application.addComponent(NodeRendererSettings, mock(NodeRendererSettings))
+        ApplicationManager.setApplication(application, disposable)
+    }
+
+
+    private ValueDescriptorImpl createValueDescriptor(PrimitiveType type, String name, PrimitiveValue value) {
+        ValueDescriptorImpl valueDescriptor = new MockDescriptor(project)
+        valueDescriptor.value = value
+        valueDescriptor.type = type
+        valueDescriptor.name = name
+        valueDescriptor
     }
 }
