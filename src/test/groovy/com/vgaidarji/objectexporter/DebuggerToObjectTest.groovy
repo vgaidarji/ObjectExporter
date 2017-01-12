@@ -1,7 +1,11 @@
 package com.vgaidarji.objectexporter
 
 import com.intellij.debugger.engine.JavaValue
+import com.intellij.debugger.engine.evaluation.EvaluationContextImpl
+import com.intellij.debugger.ui.impl.watch.ArgumentValueDescriptorImpl
+import com.intellij.debugger.ui.impl.watch.NodeManagerImpl
 import com.intellij.debugger.ui.impl.watch.ValueDescriptorImpl
+import com.intellij.mock.MockProjectEx
 import com.intellij.testFramework.LightCodeInsightTestCase
 import com.intellij.xdebugger.impl.ui.tree.XDebuggerTree
 import com.intellij.xdebugger.impl.ui.tree.nodes.XValueNodeImpl
@@ -20,7 +24,7 @@ import static org.mockito.Mockito.mock
 import static org.mockito.Mockito.when
 
 @RunWith(JUnit4)
-class DebuggerToObjectTest extends LightCodeInsightTestCase {
+class DebuggerToObjectTest extends GroovyTestCase {
     private MyVirtualMachineImpl virtualMachine
 
     @Override

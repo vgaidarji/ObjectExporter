@@ -1,1 +1,0 @@
-${objectToExtract.type} ${objectToExtract.name} = ${objectToExtract.value};
