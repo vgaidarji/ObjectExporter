@@ -10,7 +10,6 @@ import com.sun.jdi.Type
 import com.sun.jdi.Value
 import com.sun.jdi.VirtualMachine
 
-
 class MockDescriptor extends ValueDescriptorImpl {
 
     Value value
@@ -45,5 +44,4 @@ class MockDescriptor extends ValueDescriptorImpl {
     Value getValue() {
         return value
     }
-
 }

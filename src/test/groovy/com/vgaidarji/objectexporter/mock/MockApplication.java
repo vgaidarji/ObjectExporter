@@ -133,7 +133,8 @@ public class MockApplication extends MockComponentManager implements Application
     }
 
     @Override
-    public <T, E extends Throwable> T runReadAction(@NotNull ThrowableComputable<T, E> computation) throws E {
+    public <T, E extends Throwable> T runReadAction(@NotNull ThrowableComputable<T, E> computation)
+            throws E {
         return computation.compute();
     }
 
@@ -148,7 +149,8 @@ public class MockApplication extends MockComponentManager implements Application
     }
 
     @Override
-    public <T, E extends Throwable> T runWriteAction(@NotNull ThrowableComputable<T, E> computation) throws E {
+    public <T, E extends Throwable> T runWriteAction(@NotNull ThrowableComputable<T, E> computation)
+            throws E {
         return computation.compute();
     }
 
@@ -174,7 +176,8 @@ public class MockApplication extends MockComponentManager implements Application
     }
 
     @Override
-    public void addApplicationListener(@NotNull ApplicationListener listener, @NotNull Disposable parent) {
+    public void addApplicationListener(@NotNull ApplicationListener listener,
+            @NotNull Disposable parent) {
     }
 
     @Override
@@ -202,7 +205,8 @@ public class MockApplication extends MockComponentManager implements Application
     }
 
     @Override
-    public void invokeLater(@NotNull final Runnable runnable, @NotNull final ModalityState state, @NotNull final Condition expired) {
+    public void invokeLater(@NotNull final Runnable runnable, @NotNull final ModalityState state,
+            @NotNull final Condition expired) {
     }
 
     @Override

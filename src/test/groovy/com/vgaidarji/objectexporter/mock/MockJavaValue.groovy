@@ -8,8 +8,7 @@ import org.jetbrains.annotations.NotNull
 class MockJavaValue extends JavaValue {
 
     MockJavaValue(@NotNull ValueDescriptorImpl valueDescriptor,
-                            @NotNull EvaluationContextImpl evaluationContext) {
+            @NotNull EvaluationContextImpl evaluationContext) {
         super(null, valueDescriptor, evaluationContext, null, false)
     }
-
 }

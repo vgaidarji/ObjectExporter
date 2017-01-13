@@ -29,18 +29,17 @@ class MockPicoContainer implements PicoContainer {
             }
 
             @Override
-            Object getComponentInstance(PicoContainer picoContainer) throws PicoInitializationException, PicoIntrospectionException {
+            Object getComponentInstance(PicoContainer picoContainer)
+                    throws PicoInitializationException, PicoIntrospectionException {
                 return null
             }
 
             @Override
             void verify(PicoContainer picoContainer) throws PicoIntrospectionException {
-
             }
 
             @Override
             void accept(PicoVisitor picoVisitor) {
-
             }
         }
     }
@@ -77,7 +76,6 @@ class MockPicoContainer implements PicoContainer {
 
     @Override
     void verify() throws PicoVerificationException {
-
     }
 
     @Override
@@ -87,21 +85,17 @@ class MockPicoContainer implements PicoContainer {
 
     @Override
     void accept(PicoVisitor picoVisitor) {
-
     }
 
     @Override
     void dispose() {
-
     }
 
     @Override
     void start() {
-
     }
 
     @Override
     void stop() {
-
     }
 }

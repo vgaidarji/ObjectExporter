@@ -59,7 +59,7 @@ class DebuggerToObjectTest extends GroovyTestCase {
     }
 
     private XDebuggerTree createDebuggerTreeWithPrimitive(PrimitiveType type, String name,
-                                                          PrimitiveValue value) {
+            PrimitiveValue value) {
         XDebuggerTree tree = mock(XDebuggerTree)
         TreeSelectionModel treeSelectionModel = mock(TreeSelectionModel)
         TreePath treePath = mock(TreePath)
@@ -71,14 +71,12 @@ class DebuggerToObjectTest extends GroovyTestCase {
         tree
     }
 
-
     private JavaValue preparePrimitive(PrimitiveType type, String name, PrimitiveValue value) {
         mockDependencies()
         DebugProcessImpl debugProcess = new MockDebugProcess(project)
         SuspendContextImpl suspendContext = new MockSuspendContext(debugProcess, 0, 0, null)
-        EvaluationContextImpl evaluationContext = new EvaluationContextImpl(suspendContext, null, null)
         ValueDescriptorImpl descriptor = createValueDescriptor(type, name, value)
-        new MockJavaValue(descriptor, evaluationContext)
+        new MockJavaValue(descriptor, new EvaluationContextImpl(suspendContext, null, null))
     }
 
     private void mockDependencies() {
@@ -90,8 +88,8 @@ class DebuggerToObjectTest extends GroovyTestCase {
         ApplicationManager.setApplication(application, disposable)
     }
 
-
-    private ValueDescriptorImpl createValueDescriptor(PrimitiveType type, String name, PrimitiveValue value) {
+    private ValueDescriptorImpl createValueDescriptor(PrimitiveType type, String name,
+            PrimitiveValue value) {
         ValueDescriptorImpl valueDescriptor = new MockDescriptor(project)
         valueDescriptor.value = value
         valueDescriptor.type = type
