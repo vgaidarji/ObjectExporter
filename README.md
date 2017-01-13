@@ -1,4 +1,7 @@
 # Object Exporter
+
+[![Build Status](https://travis-ci.org/vgaidarji/ObjectExporter.svg?branch=master)](https://travis-ci.org/vgaidarji/ObjectExporter) [![Coverage Status](https://coveralls.io/repos/github/vgaidarji/ObjectExporter/badge.svg)](https://coveralls.io/github/vgaidarji/ObjectExporter)
+
 Intellij IDEA plugin for object extraction from debugger.
 
 Tries to fix the problem [exporting-objects-from-the-android-studio-debugger](http://stackoverflow.com/questions/28987629/exporting-objects-from-the-android-studio-debugger).

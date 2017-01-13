@@ -2,6 +2,9 @@ buildscript {
     repositories {
         mavenCentral()
     }
+    dependencies {
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.7.1'
+    }
 }
 
 plugins {
@@ -11,7 +14,8 @@ plugins {
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'groovy'
-apply plugin: 'jacoco'
+apply from: 'jacoco.gradle'
+apply from: 'coveralls.gradle'
 
 intellij {
     version 'IC-2016.3.1'
@@ -27,8 +31,6 @@ intellij {
 
 group 'com.vgaidarji.objectexporter'
 version '0.1.0-SNAPSHOT'
-
-sourceCompatibility = 1.7
 
 repositories {
     mavenCentral()
@@ -49,16 +51,4 @@ dependencies {
     compile 'org.freemarker:freemarker:2.3.23'
     testCompile 'junit:junit:4.12'
     testCompile 'org.mockito:mockito-core:2.5.7'
-}
-
-jacoco {
-    toolVersion = "0.7.6.201602180812"
-}
-
-jacocoTestReport {
-    reports {
-        html.enabled = true
-        xml.enabled = true
-        csv.enabled = false
-    }
 }
