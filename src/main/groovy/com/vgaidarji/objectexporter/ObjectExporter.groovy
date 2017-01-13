@@ -30,8 +30,10 @@ class ObjectExporter {
                         descriptor.getVariableValue().toString()))
         Writer stringWriter = new StringWriter()
         try {
-            getConfiguration().getTemplate(TEMPLATE_PRIMITIVE_OBJECT)
-                    .process(input, stringWriter)
+            if (getConfiguration()) {
+                getConfiguration().getTemplate(TEMPLATE_PRIMITIVE_OBJECT)
+                        .process(input, stringWriter)
+            }
         } finally {
             stringWriter.close()
         }
