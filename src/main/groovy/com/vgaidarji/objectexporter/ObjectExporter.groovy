@@ -1,7 +1,6 @@
 package com.vgaidarji.objectexporter
 
 import freemarker.template.Configuration
-import freemarker.template.Template
 import freemarker.template.Version
 
 import java.nio.charset.StandardCharsets
@@ -29,13 +28,10 @@ class ObjectExporter {
                 new ObjectToExtract(descriptor.getVariableType().name(),
                         descriptor.getVariableName(),
                         descriptor.getVariableValue().toString()))
-        Template template = getConfiguration().getTemplate(TEMPLATE_PRIMITIVE_OBJECT)
-        Writer consoleWriter = new OutputStreamWriter(System.out)
-        template.process(input, consoleWriter)
-
         Writer stringWriter = new StringWriter()
         try {
-            template.process(input, stringWriter)
+            getConfiguration().getTemplate(TEMPLATE_PRIMITIVE_OBJECT)
+                    .process(input, stringWriter)
         } finally {
             stringWriter.close()
         }
