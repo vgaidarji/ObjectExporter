@@ -1,6 +1,6 @@
 # Object Exporter
 
-[![Build Status](https://travis-ci.org/vgaidarji/ObjectExporter.svg?branch=master)](https://travis-ci.org/vgaidarji/ObjectExporter) [![Coverage Status](https://coveralls.io/repos/github/vgaidarji/ObjectExporter/badge.svg)](https://coveralls.io/github/vgaidarji/ObjectExporter)
+[![Build Status](https://travis-ci.org/vgaidarji/ObjectExporter.svg?branch=master)](https://travis-ci.org/vgaidarji/ObjectExporter) [![Coverage Status](https://coveralls.io/repos/github/vgaidarji/ObjectExporter/badge.svg?branch=master)](https://coveralls.io/github/vgaidarji/ObjectExporter?branch=master)
 
 Intellij IDEA plugin for object extraction from debugger.
 
