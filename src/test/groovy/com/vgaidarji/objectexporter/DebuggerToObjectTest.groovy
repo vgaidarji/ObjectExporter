@@ -16,7 +16,6 @@ import com.intellij.xdebugger.impl.ui.tree.XDebuggerTree
 import com.intellij.xdebugger.impl.ui.tree.nodes.XValueNodeImpl
 import com.sun.jdi.PrimitiveValue
 import com.sun.tools.jdi.MyIntegerValueImpl
-import com.sun.tools.jdi.MyVirtualMachineImpl
 import com.vgaidarji.objectexporter.mock.*
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,18 +29,11 @@ import static org.mockito.Mockito.mock
 import static org.mockito.Mockito.when
 
 @RunWith(JUnit4)
-class DebuggerToObjectTest extends GroovyTestCase {
-    private MyVirtualMachineImpl virtualMachine
+class DebuggerToObjectTest extends BaseGroovyTest {
     private Disposable disposable
     private PicoContainer picoContainer
     private Application application
     private Project project
-
-    @Override
-    void setUp() {
-        super.setUp()
-        virtualMachine = mock(MyVirtualMachineImpl)
-    }
 
     @Test
     void toObject_shouldExtractPrimitive() {

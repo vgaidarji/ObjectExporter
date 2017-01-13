@@ -1,6 +1,5 @@
 package com.vgaidarji.objectexporter
 
-import com.intellij.openapi.project.Project
 import freemarker.template.Configuration
 import freemarker.template.Template
 import freemarker.template.Version
@@ -15,12 +14,10 @@ class ObjectExporter {
     public static final String OBJECT_PRIMITIVE_TEMPLATE_MAPPING = "objectToExtract"
 
     private Configuration freemakerConfiguration
-    private final Project project
     private final ObjectDescriptor descriptor
 
-    ObjectExporter(Project project, ObjectDescriptor descriptor) {
+    ObjectExporter(ObjectDescriptor descriptor) {
         this.descriptor = descriptor
-        this.project = project
     }
 
     /**

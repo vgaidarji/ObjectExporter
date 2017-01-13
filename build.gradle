@@ -14,8 +14,8 @@ plugins {
 apply plugin: 'idea'
 apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'groovy'
+apply plugin: 'com.github.kt3k.coveralls'
 apply from: 'jacoco.gradle'
-apply from: 'coveralls.gradle'
 
 intellij {
     version 'IC-2016.3.1'

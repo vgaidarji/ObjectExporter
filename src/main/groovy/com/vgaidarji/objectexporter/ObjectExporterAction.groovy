@@ -29,7 +29,7 @@ class ObjectExporterAction extends AnAction {
         XDebuggerTree xDebuggerTree = XDebuggerTree.getTree(e)
         if (xDebuggerTree != null) {
             ObjectDescriptor objectDescriptor = new DebuggerTreeToObject().toObject(xDebuggerTree)
-            String code = new ObjectExporter(e.getProject(), objectDescriptor).asString()
+            String code = new ObjectExporter(objectDescriptor).asString()
             Messages.showMessageDialog(e.getProject(), code, "Extracted object",
                     Messages.getInformationIcon())
         }
