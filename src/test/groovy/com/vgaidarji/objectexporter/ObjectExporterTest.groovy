@@ -16,28 +16,23 @@
 
 package com.vgaidarji.objectexporter
 
-import com.sun.jdi.Type
-import com.sun.jdi.VirtualMachine
+import com.sun.tools.jdi.MyIntegerValueImpl
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
-class PrimitiveType implements Type {
-    String name
+@RunWith(JUnit4)
+class ObjectExporterTest extends BaseGroovyTest {
 
-    PrimitiveType(String name) {
-        this.name = name
-    }
+    @Test
+    void asString_shouldGenerateCodeForExtractedPrimitive() {
+        def type = new PrimitiveType("int")
+        def name = "myVariable"
+        def value = new MyIntegerValueImpl(virtualMachine, 3)
+        ObjectExporter exporter = new ObjectExporter(new ObjectDescriptor(name, type, value))
 
-    @Override
-    String signature() {
-        return null
-    }
+        String exportedPrimitive = exporter.asString()
 
-    @Override
-    String name() {
-        return name
-    }
-
-    @Override
-    VirtualMachine virtualMachine() {
-        return null
+        assertEquals("int myVariable = 3;", exportedPrimitive)
     }
 }

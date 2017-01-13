@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package com.vgaidarji.objectexporter.mock
+package com.vgaidarji.objectexporter
 
-import com.intellij.debugger.engine.JavaValue
-import com.intellij.debugger.engine.evaluation.EvaluationContextImpl
-import com.intellij.debugger.ui.impl.watch.ValueDescriptorImpl
-import org.jetbrains.annotations.NotNull
+import com.sun.tools.jdi.MyVirtualMachineImpl
 
-class MockJavaValue extends JavaValue {
+import static org.mockito.Mockito.mock
 
-    MockJavaValue(@NotNull ValueDescriptorImpl valueDescriptor,
-            @NotNull EvaluationContextImpl evaluationContext) {
-        super(null, valueDescriptor, evaluationContext, null, false)
+abstract class BaseGroovyTest extends GroovyTestCase {
+    protected MyVirtualMachineImpl virtualMachine
+
+    @Override
+    void setUp() {
+        super.setUp()
+        virtualMachine = mock(MyVirtualMachineImpl)
     }
 }

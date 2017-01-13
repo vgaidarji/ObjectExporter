@@ -1,8 +1,22 @@
+/*
+ * Copyright (C) 2016-2017 Veaceslav Gaidarji
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.vgaidarji.objectexporter
 
-import com.intellij.openapi.project.Project
 import freemarker.template.Configuration
-import freemarker.template.Template
 import freemarker.template.Version
 
 import java.nio.charset.StandardCharsets
@@ -15,12 +29,10 @@ class ObjectExporter {
     public static final String OBJECT_PRIMITIVE_TEMPLATE_MAPPING = "objectToExtract"
 
     private Configuration freemakerConfiguration
-    private final Project project
     private final ObjectDescriptor descriptor
 
-    ObjectExporter(Project project, ObjectDescriptor descriptor) {
+    ObjectExporter(ObjectDescriptor descriptor) {
         this.descriptor = descriptor
-        this.project = project
     }
 
     /**
@@ -32,13 +44,12 @@ class ObjectExporter {
                 new ObjectToExtract(descriptor.getVariableType().name(),
                         descriptor.getVariableName(),
                         descriptor.getVariableValue().toString()))
-        Template template = getConfiguration().getTemplate(TEMPLATE_PRIMITIVE_OBJECT)
-        Writer consoleWriter = new OutputStreamWriter(System.out)
-        template.process(input, consoleWriter)
-
         Writer stringWriter = new StringWriter()
         try {
-            template.process(input, stringWriter)
+            if (getConfiguration()) {
+                getConfiguration().getTemplate(TEMPLATE_PRIMITIVE_OBJECT)
+                        .process(input, stringWriter)
+            }
         } finally {
             stringWriter.close()
         }
