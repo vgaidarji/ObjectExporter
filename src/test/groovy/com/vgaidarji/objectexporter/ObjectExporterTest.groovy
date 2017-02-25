@@ -25,7 +25,7 @@ import org.junit.runners.JUnit4
 class ObjectExporterTest extends BaseGroovyTest {
 
     @Test
-    void asString_shouldGenerateCodeForExtractedPrimitive() {
+    void generatesCodeForExtractedPrimitive() {
         def type = new PrimitiveType("int")
         def name = "myVariable"
         def value = new MyIntegerValueImpl(virtualMachine, 3)

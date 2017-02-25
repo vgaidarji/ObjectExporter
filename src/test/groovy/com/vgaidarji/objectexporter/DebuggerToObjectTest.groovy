@@ -52,7 +52,7 @@ class DebuggerToObjectTest extends BaseGroovyTest {
     private Project project
 
     @Test
-    void toObject_shouldExtractPrimitive() {
+    void extractsPrimitive() {
         DebuggerTreeToObject extractor = new DebuggerTreeToObject()
         def type = new PrimitiveType("int")
         def name = "myVariable"
