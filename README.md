@@ -17,6 +17,18 @@ Finally, might work in the same way as [Object Exporter](https://visualstudiogal
 
 - Searching for information within objects.
 
+# Plugin development
+
+This plugin uses [gradle-intellij-plugin](https://github.com/JetBrains/gradle-intellij-plugin),
+which allows us to develop plugins for Intellij IDEA with Gradle.
+
+Create `Run configuration` in Intellij IDEA for easy plugin development/debugging:
+
+<img src="/assets/create_plugin_run_configuration.png">
+
+_Note_: Setting breakpoints in plugin source code and running external IDEA instance 
+using `Run configuration` just works. 
+
 Developed By
 ------------
 
