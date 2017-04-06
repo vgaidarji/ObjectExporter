@@ -14,27 +14,23 @@
  * limitations under the License.
  */
 
-package com.vgaidarji.objectexporter
+package com.vgaidarji.objectexporter.parser
 
 import com.vgaidarji.objectexporter.model.ObjectDescriptor
-import com.vgaidarji.objectexporter.parser.NonPrimitiveParser
-import com.vgaidarji.objectexporter.parser.PrimitiveParser
+import com.vgaidarji.objectexporter.model.ObjectToExtract
 
-class ObjectExporter {
-    private final ObjectDescriptor objectDescriptor
+class PrimitiveParser extends ObjectParser {
 
-    ObjectExporter(ObjectDescriptor objectDescriptor) {
-        this.objectDescriptor = objectDescriptor
+    PrimitiveParser(ObjectDescriptor objectDescriptor) {
+        super(objectDescriptor)
     }
 
-    /**
-     * Extracts object as String.
-     */
-    String asString() {
-        if (objectDescriptor.valueDescriptor.isPrimitive()) {
-            new PrimitiveParser(objectDescriptor).primitiveAsString
-        } else {
-            new NonPrimitiveParser(objectDescriptor).nonPrimitiveAsString
-        }
+    String getPrimitiveAsString() {
+        Map<String, Object> input = new HashMap<String, Object>()
+        def objectToExtract = new ObjectToExtract(objectDescriptor.variableName,
+                objectDescriptor.variableType.name(),
+                objectDescriptor.variableValue.toString())
+        input.put(OBJECT_PRIMITIVE_TEMPLATE_MAPPING, objectToExtract)
+        applyTemplate(TEMPLATE_PRIMITIVE_OBJECT, input)
     }
 }

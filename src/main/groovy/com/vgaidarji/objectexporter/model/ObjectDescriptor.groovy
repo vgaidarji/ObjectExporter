@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
-package com.vgaidarji.objectexporter
+package com.vgaidarji.objectexporter.model
 
+import com.intellij.debugger.engine.JavaValue
+import com.intellij.debugger.ui.impl.watch.ValueDescriptorImpl
 import com.sun.jdi.Type
 import com.sun.jdi.Value
 
@@ -23,11 +25,13 @@ class ObjectDescriptor {
     final String variableName
     final Type variableType
     final Value variableValue
+    final ValueDescriptorImpl valueDescriptor
 
-    ObjectDescriptor(String variableName, Type variableType, Value variableValue) {
-        this.variableName = variableName
-        this.variableType = variableType
-        this.variableValue = variableValue
+    ObjectDescriptor(JavaValue value) {
+        this.variableName = value.name
+        this.variableType = value.descriptor.type
+        this.variableValue = value.descriptor.value
+        this.valueDescriptor = value.descriptor
     }
 
     String getVariableName() {
@@ -40,5 +44,9 @@ class ObjectDescriptor {
 
     Value getVariableValue() {
         return variableValue
+    }
+
+    ValueDescriptorImpl getValueDescriptor() {
+        return valueDescriptor
     }
 }

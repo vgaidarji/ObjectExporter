@@ -17,6 +17,9 @@
 package com.vgaidarji.objectexporter
 
 import com.sun.tools.jdi.MyIntegerValueImpl
+import com.vgaidarji.objectexporter.mock.MockJavaValue
+import com.vgaidarji.objectexporter.model.ObjectDescriptor
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -24,15 +27,42 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4)
 class ObjectExporterTest extends BaseGroovyTest {
 
+
     @Test
     void generatesCodeForExtractedPrimitive() {
         def type = new PrimitiveType("int")
         def name = "myVariable"
         def value = new MyIntegerValueImpl(virtualMachine, 3)
-        ObjectExporter exporter = new ObjectExporter(new ObjectDescriptor(name, type, value))
+        ObjectExporter exporter = new ObjectExporter(new ObjectDescriptor(
+                new MockJavaValue(createPrimitiveValueDescriptor(type, name, value), evaluationContext)
+        ))
 
         String exportedPrimitive = exporter.asString()
 
         assertEquals("int myVariable = 3;", exportedPrimitive)
+    }
+
+    @Ignore
+    @Test
+    void generatesCodeForExtractedObject() {
+        String expected = "Person person = new Person(); \
+        person.setFirstName(\"Veaceslav\"); \
+        person.setLastName(\"Gaidarji\"); \
+        person.setAge(17); \
+        Address address = new Address(); \
+        address.setCity(\"Chisinau\"); \
+        address.setStreet(\"bd. Stefan cel Mare\"); \
+        address.setBuilding(1); \
+        person.setAddress(address);"
+        def type = null
+        def name = "person"
+        def value = null
+        ObjectExporter exporter = new ObjectExporter(new ObjectDescriptor(
+                new MockJavaValue(createPrimitiveValueDescriptor(type, name, value), evaluationContext)
+        ))
+
+        String exported = exporter.asString()
+
+        assertEquals(expected, exported)
     }
 }

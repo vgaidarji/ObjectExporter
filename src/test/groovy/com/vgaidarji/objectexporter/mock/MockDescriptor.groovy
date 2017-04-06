@@ -31,6 +31,7 @@ class MockDescriptor extends ValueDescriptorImpl {
     Value value
     Type type
     String name
+    Boolean isPrimitive
 
     MockDescriptor(Project project) {
         super(project)
@@ -59,5 +60,10 @@ class MockDescriptor extends ValueDescriptorImpl {
     @Override
     Value getValue() {
         return value
+    }
+
+    @Override
+    boolean isPrimitive() {
+        return isPrimitive
     }
 }

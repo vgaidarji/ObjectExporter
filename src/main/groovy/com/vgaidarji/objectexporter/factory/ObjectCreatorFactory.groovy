@@ -14,28 +14,11 @@
  * limitations under the License.
  */
 
-package com.vgaidarji.objectexporter
+package com.vgaidarji.objectexporter.factory
 
-class ObjectToExtract {
-    private final String type
-    private final String name
-    private final String value
-
-    ObjectToExtract(String type, String name, String value) {
-        this.type = type
-        this.name = name
-        this.value = value
-    }
-
-    String getType() {
-        return type
-    }
-
-    String getName() {
-        return name
-    }
-
-    String getValue() {
-        return value
-    }
+/**
+ * Object can be created and filled with data in different ways.
+ */
+interface ObjectCreatorFactory {
+    String construct()
 }

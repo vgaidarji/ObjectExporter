@@ -18,20 +18,11 @@ package com.vgaidarji.objectexporter
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.ui.Messages
-import com.intellij.xdebugger.impl.ui.tree.XDebuggerTree
-import com.vgaidarji.objectexporter.model.ObjectDescriptor
 
-class ObjectExporterAction extends AnAction {
-
+class ObjectImporterAction extends AnAction {
     @Override
-    void actionPerformed(AnActionEvent e) {
-        XDebuggerTree xDebuggerTree = XDebuggerTree.getTree(e)
-        if (xDebuggerTree != null) {
-            ObjectDescriptor objectDescriptor = new DebuggerTreeToObject().toObject(xDebuggerTree)
-            String code = new ObjectExporter(objectDescriptor).asString()
-            Messages.showMessageDialog(e.getProject(), code, "Extracted object",
-                    Messages.getInformationIcon())
-        }
+    void actionPerformed(AnActionEvent anActionEvent) {
+        // TODO show dialog on object paste action
+        // TODO with different pasting options "setters way", "ctor way", "builder pattern way"
     }
 }
