@@ -16,11 +16,12 @@
 
 package com.vgaidarji.objectexporter.parser
 
+import com.sun.jdi.Field
+import com.sun.jdi.Value
+import com.sun.tools.jdi.ArrayTypeImpl
 import com.sun.tools.jdi.ClassTypeImpl
 import com.sun.tools.jdi.ObjectReferenceImpl
 import com.vgaidarji.objectexporter.model.ObjectDescriptor
-import com.vgaidarji.objectexporter.model.ObjectToExtract
-import javassist.bytecode.SignatureAttribute
 
 class NonPrimitiveParser extends ObjectParser {
 
@@ -28,9 +29,9 @@ class NonPrimitiveParser extends ObjectParser {
         super(objectDescriptor)
     }
 
-    String getNonPrimitiveAsString() {
+    def getNonPrimitiveAsString() {
         Map<String, Object> input = new HashMap<String, Object>()
-
+        StringBuilder generated = new StringBuilder()
         //        Person person = new Person(); \
         //        person.setFirstName(\"Veaceslav\"); \
         //        person.setLastName(\"Gaidarji\"); \
@@ -41,29 +42,26 @@ class NonPrimitiveParser extends ObjectParser {
         //        address.setBuilding(1); \
         //        person.setAddress(address);
 
-        ClassTypeImpl classType = (ClassTypeImpl)objectDescriptor.valueDescriptor.type
-        ObjectReferenceImpl value = (ObjectReferenceImpl)objectDescriptor.valueDescriptor.value
-
-        StringBuilder generated = new StringBuilder()
-                .append(extractSimpleName(classType.signature()))
-                .append()
+        def type = objectDescriptor.valueDescriptor.type
+        if (type instanceof ClassTypeImpl) {
+            ClassTypeImpl classType = (ClassTypeImpl) type
+            ObjectReferenceImpl value = (ObjectReferenceImpl) objectDescriptor.valueDescriptor.value
+            generated.append(extractSimpleName(classType.signature()));
+            appendFields(classType, generated)
+        } else if (type instanceof ArrayTypeImpl) {
+            // parse array signature
+        }
 
         // TODO use FreeBuilder API and create object metadata http://programtalk.com/vs/FreeBuilder/src/test/java/org/inferred/freebuilder/processor/SetSourceTest.java/
         // TODO generate object from metadata
-
-        def objectToExtract = new ObjectToExtract(objectDescriptor.variableName,
-                objectDescriptor.variableType.name(),
-                objectDescriptor.variableValue.toString())
-        input.put(OBJECT_PRIMITIVE_TEMPLATE_MAPPING, objectToExtract)
-        applyTemplate(TEMPLATE_NON_PRIMITIVE_OBJECT, input)
+        generated
     }
-
 
     /**
      * @param className e.g.: Lsample/SampleJava$Person;
      * @return SampleJava.Person
      */
-    String extractSimpleName(String className) {
+    static def extractSimpleName(String className) {
         int i = className.lastIndexOf('/')
         if (i > 0) {
             className = className.substring(i + 1)
@@ -71,5 +69,18 @@ class NonPrimitiveParser extends ObjectParser {
         className = className.replace(';', '')
         className = className.replace('$', '.')
         return className
+    }
+
+    static def appendFields(ClassTypeImpl classType, StringBuilder builder) {
+        for (Field f : classType.fields()) {
+            String name = f.name()
+            Value v = classType.getValue(f)
+            builder.append("set")
+                    .append(name.capitalize())
+                    .append("(")
+                    .append(v.toString())
+                    .append(")")
+                    .append(";")
+        }
     }
 }

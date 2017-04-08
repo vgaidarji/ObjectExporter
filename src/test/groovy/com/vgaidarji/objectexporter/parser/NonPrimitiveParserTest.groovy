@@ -33,6 +33,10 @@ import static org.mockito.Mockito.mock
 @RunWith(Parameterized.class)
 class NonPrimitiveParserTest extends BaseGroovyTest {
 
+    private NonPrimitiveParser parser
+    private String input
+    private String expected
+
     @Parameterized.Parameters
     static ArrayList<Object> fullyQualifiedClassNames() {
         [
@@ -49,10 +53,6 @@ class NonPrimitiveParserTest extends BaseGroovyTest {
                 ["Lsample/SampleJava\$Person;", "SampleJava.Person"]
         ]*.toArray()
     }
-
-    private NonPrimitiveParser parser
-    private String input
-    private String expected
 
     NonPrimitiveParserTest(String input, String expected) {
         this.input = input

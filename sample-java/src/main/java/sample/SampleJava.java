@@ -19,6 +19,7 @@ public class SampleJava {
         Long l = 2L;
         Float f = 2.f;
         Double d = 2.d;
+        Integer[] i = new Integer[] {1, 2, 3};
 
         Person person = new Person();
         person.setFirstName("Veaceslav");

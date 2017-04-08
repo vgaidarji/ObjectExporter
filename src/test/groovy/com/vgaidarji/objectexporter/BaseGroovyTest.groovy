@@ -29,6 +29,7 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.extensions.Extensions
 import com.intellij.openapi.project.Project
 import com.sun.jdi.PrimitiveValue
+import com.sun.tools.jdi.ClassTypeImpl
 import com.sun.tools.jdi.MyVirtualMachineImpl
 import com.vgaidarji.objectexporter.mock.MockApplication
 import com.vgaidarji.objectexporter.mock.MockDebugProcess
@@ -36,6 +37,7 @@ import com.vgaidarji.objectexporter.mock.MockDescriptor
 import com.vgaidarji.objectexporter.mock.MockDisposable
 import com.vgaidarji.objectexporter.mock.MockJavaValue
 import com.vgaidarji.objectexporter.mock.MockPicoContainer
+import kotlin.reflect.jvm.internal.impl.types.ClassTypeConstructorImpl
 import org.junit.Before
 import org.picocontainer.PicoContainer
 
@@ -65,6 +67,16 @@ abstract class BaseGroovyTest extends GroovyTestCase {
     }
 
     protected ValueDescriptorImpl createPrimitiveValueDescriptor(PrimitiveType type, String name,
+            PrimitiveValue value) {
+        ValueDescriptorImpl valueDescriptor = new MockDescriptor(project)
+        valueDescriptor.value = value
+        valueDescriptor.type = type
+        valueDescriptor.name = name
+        valueDescriptor.isPrimitive = true
+        valueDescriptor
+    }
+
+    protected ValueDescriptorImpl createClassTypeDescriptor(ClassTypeImpl type, String name,
             PrimitiveValue value) {
         ValueDescriptorImpl valueDescriptor = new MockDescriptor(project)
         valueDescriptor.value = value

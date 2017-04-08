@@ -16,10 +16,10 @@
 
 package com.vgaidarji.objectexporter
 
+import com.sun.tools.jdi.ClassTypeImpl
 import com.sun.tools.jdi.MyIntegerValueImpl
 import com.vgaidarji.objectexporter.mock.MockJavaValue
 import com.vgaidarji.objectexporter.model.ObjectDescriptor
-import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
@@ -42,7 +42,6 @@ class ObjectExporterTest extends BaseGroovyTest {
         assertEquals("int myVariable = 3;", exportedPrimitive)
     }
 
-    @Ignore
     @Test
     void generatesCodeForExtractedObject() {
         String expected = "Person person = new Person(); \
@@ -54,11 +53,11 @@ class ObjectExporterTest extends BaseGroovyTest {
         address.setStreet(\"bd. Stefan cel Mare\"); \
         address.setBuilding(1); \
         person.setAddress(address);"
-        def type = null
+        def type = mock(ClassTypeImpl.class)
         def name = "person"
         def value = null
         ObjectExporter exporter = new ObjectExporter(new ObjectDescriptor(
-                new MockJavaValue(createPrimitiveValueDescriptor(type, name, value), evaluationContext)
+                new MockJavaValue(createClassTypeDescriptor(type, name, value), evaluationContext)
         ))
 
         String exported = exporter.asString()
